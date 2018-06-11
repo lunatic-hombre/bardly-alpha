@@ -1,0 +1,105 @@
+#root {
+  position: absolute;
+  top: 0; bottom: 0; left: 0; right: 0;
+  background-color: black;
+  color: white;
+  >.app {
+    width: 900px;
+    min-width: 400px;
+    margin: 0 auto;
+    height: 100%;
+  }
+}
+
+.logo {
+  float: right;
+  font-style: italic;
+  margin: 0.5em 1em;
+}
+
+.bottom-panel {
+  width: 300px;
+  margin: 2em auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.playback {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .buttons {
+    display: flex;
+    margin: 0.5em auto;
+
+    > button {
+      &:first-child {
+        border-radius: 0.25em 0 0 0.25em;
+      }
+      &:last-child {
+        border-radius: 0 0.25em 0.25em 0;
+      }
+      background: lightGray;
+      border: 1px solid gray;
+    }
+
+  }
+  .status {
+    margin: 0.25em 0;
+  }
+}
+
+.track-picker {
+
+  >.track-list {
+    margin: 0;
+    padding: 3em 2em;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+
+    > li {
+      position: relative;
+      background-color: rgba(255,255,255,0.45);
+      border-radius: 0.5em;
+      width: 80px;
+      height: 50px;
+      padding: 0.5em 0.25em;
+      margin: 0.25em;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+
+      > .buttons {
+        display: none;
+        position: absolute;
+        top:0; bottom:0; left:0; right:0;
+        justify-content: center;
+        align-items: center;
+        > .material-icons {
+          font-size: 1.75em;
+          margin: 0.1em;
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+      }
+
+      &:hover {
+        > .title {
+          filter: blur(2px) opacity(0.5);
+        }
+        > .buttons {
+          display: flex;
+        }
+      }
+
+    }
+  }
+}

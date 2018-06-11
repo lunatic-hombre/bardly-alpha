@@ -1,2 +1,2 @@
-# bardly-alpha
-This is the alpha of the future of musical DMing.
+# bardly
+The solution for all your table-top musical atmosphere needs.
