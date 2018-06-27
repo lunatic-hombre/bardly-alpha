@@ -1,26 +1,15 @@
 
 const tracks = [
-  {
-    title: 'Wandering in a Forest',
-    url: 'https://freesound.org/data/previews/328/328296_1661766-lq.mp3'
-  },
-  {
-    title: 'Fighting Goblins',
-    url: 'https://freesound.org/data/previews/192/192072_3482490-lq.mp3'
-  },
-  {
-    title: 'Drinking in a Tavern',
-    url: 'https://freesound.org/data/previews/144/144139_2041615-lq.mp3'
-  },
-  {
-    title: 'Camping in a Field'
-  },
-  {
-    title: 'Shopping at the Market'
-  },
-  {
-    title: 'Slaying a Dragon'
-  }
+  { title: 'Camping in a Dungeon', url: '/media/camping-in-a-dungeon.mp3' },
+  { title: 'Exploring a Cave', url: '/media/exploring-a-cave.mp3' },
+  { title: 'Fighting Goblins', url: '/media/fighting-goblins.mp3' },
+  { title: 'Traveling in Forest', url: '/media/traveling-in-forest.mp3' },
+  { title: 'Camping in Forest', url: '/media/camping-in-forest.mp3' },
+  { title: 'Exploring a Crypt', url: '/media/exploring-a-crypt.mp3' },
+  { title: 'Fighting Orcs', url: '/media/fighting-orcs.mp3' },
+  { title: 'Chased in a Dungeon', url: '/media/chased-in-a-dungeon.mp3' },
+  { title: 'Fighting Beasts', url: '/media/fighting-beasts.mp3' },
+  { title: 'Shopping in a City Market', url: '/media/shopping-in-a-city-market.mp3' }
 ];
 
 ReactDOM.render(
