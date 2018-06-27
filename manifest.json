@@ -1,0 +1,21 @@
+{
+  "short_name": "Bardly",
+  "name": "Bardly Alpha",
+  "icons": [
+    {
+      "src": "/images/lute-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/lute-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/bardly-alpha/index.html",
+  "background_color": "#000000",
+  "display": "standalone",
+  "scope": "/bardly-alpha/",
+  "theme_color": "#000000"
+}
