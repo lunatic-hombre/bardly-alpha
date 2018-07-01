@@ -1,4 +1,7 @@
 
+const scenario = {
+  title: 'Quest for the Holy Grail'
+};
 const tracks = [
   { title: 'Camping in a Dungeon', url: 'media/camping-in-a-dungeon.mp3' },
   { title: 'Exploring a Cave', url: 'media/exploring-a-cave.mp3' },
@@ -11,8 +14,15 @@ const tracks = [
   { title: 'Fighting Beasts', url: 'media/fighting-beasts.mp3' },
   { title: 'Shopping in a City Market', url: 'media/shopping-in-a-city-market.mp3' }
 ];
+const scenes = new TreeNode({
+  text: 'Wandering through a forest.',
+  track: tracks[3]
+}).append({
+  text: 'Fighting wolves.',
+  track: tracks[8]
+});
 
 ReactDOM.render(
-  <BardlyPlayer tracks={tracks} />,
+  <BardlyTerminal scenario={scenario} scenes={scenes} tracks={tracks} />,
   document.getElementById('root')
 );

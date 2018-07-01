@@ -1,160 +1,138 @@
-#root {
-  position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
+body {
   background-color: black;
   color: white;
   font-family: sans-serif;
-
-  >.app {
-    max-width: 900px;
-    min-width: 400px;
-    margin: 0 auto;
-    height: 100%;
-
-    > main {
-      display: flex;
-    }
-
-  }
-
 }
-
-.logo {
-  text-align: right;
-  font-style: italic;
-  margin: 0.5em 1em;
+.app {
+  margin: 1em auto;
+  padding: 1.4em 0;
+  max-width: 500px;
+  position: relative;
 }
-
-.bottom-panel {
-  width: 300px;
-  margin: 2em auto;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.app-header {
+  background-color: rgba(174,225,225,0.35);
+  padding: 0.2em;
 }
-
-.playback {
+.scenario {
+  padding: 0.25em;
+}
+.menu-group {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .buttons {
-    display: flex;
-    margin: 0.5em auto;
-
-    > button {
-      border: 1px solid gray;
-    }
-
-  }
-  .status {
-    margin: 0.25em 0;
-  }
+  justify-content: space-between;
 }
-
-.play-list {
-
-  display: inline-block;
-  transition: width 0.5s;
-
-  > ul {
-
-    margin: 0;
-    padding: 1em;
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-
-    > li {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding-left: 0.5em;
-
-      &.current {
-        background-color: rgba(255,255,255,0.35);
-      }
-
-      .title {
-        cursor: grab;
-      }
-
-      > .buttons {
-        margin: 0.25em;
-      }
-
-      &.over {
-        border-top: 2px solid lightGray;
-      }
-    }
-
-  }
-
-}
-.buttons {
-
+nav.menu {
   display: flex;
   justify-content: center;
-  align-items: center;
-
-  >* {
+  
+  > button {
+    background: transparent;
+    color: inherit;
+    border: none;
     cursor: pointer;
+    
     &:hover {
       transform: scale(1.1);
     }
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      opacity: 0.35;
+    }
   }
 }
-.track-picker {
-
-  flex-grow: 1;
-
-  > form.search {
-    display: flex;
-    justify-content: center;
-  }
-
-  >.track-list {
-    margin: 0;
-    padding: 3em 2em;
+.terminal-window {
+  display: flex;
+  flex-direction: column;
+  
+  ul.scenes {
     list-style-type: none;
-    display: flex;
-    flex-wrap: wrap;
-
+    margin: 0;
+    padding: 0;
+    
     > li {
-      position: relative;
-      background-color: rgba(255,255,255,0.45);
-      border-radius: 0.5em;
-      width: 80px;
-      height: 50px;
-      padding: 0.5em 0.25em;
-      margin: 0.25em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       text-align: center;
-      cursor: pointer;
+      padding: 0.75em 0;
+      transition: background-color 0.5s;
 
-      > .buttons {
-        display: none;
-        position: absolute;
-        top:0; bottom:0; left:0; right:0;
-        > .material-icons {
-          font-size: 1.75em;
-          margin: 0.1em;
+      >.text {
+        cursor: pointer;
+      }
+        
+      >.details {
+        text-align: left;
+        transition: height 0.2s;
+        height: 0;
+        overflow: hidden;S
+        button {
+          font-size: 1.25em;
+        }
+        >.tags {
+          padding: 0.5em 0;
         }
       }
-
       &:hover {
-        > .title {
-          filter: blur(2px) opacity(0.5);
-        }
-        > .buttons {
-          display: flex;
+        background-color: rgba(255,255,255,0.10);
+      }
+      &.selected {
+        background-color: rgba(255,255,255,0.15);
+
+        >.details {
+          height: 3em;
+          padding: 0.2em;
         }
       }
-
+      &.active > .text {
+        &:before {
+          content: '[ ';
+        }
+        &:after {
+          content: ' ]';
+        }
+      }
+      
     }
+  }
+  > form {
+    display: flex;
+
+    input[type="text"].terminal {
+      background-color: black;
+      font-size: 1em;
+      color: white;
+      border: 1px solid white;
+      padding: 0.25em;
+      flex: 2;
+
+      &:focus {
+        border: 1px solid #AF8;
+        outline: yellow;
+
+        &::placeholder {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.tag {
+  display: inline-flex;
+  justify-content: center;
+  opacity: 0.75;
+  font-size: 0.75em;
+  > i {
+    font-size: 1em;
+    padding: 0 0.25em;
+    color: #7EE;
+  }
+  &:hover {
+    opacity: 1;
   }
 }
