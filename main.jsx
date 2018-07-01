@@ -1,6 +1,6 @@
 
 const scenario = {
-  title: 'Quest for the Holy Grail'
+  title: 'Adventure #4'
 };
 const tracks = [
   { title: 'Camping in a Dungeon', url: 'media/camping-in-a-dungeon.mp3' },
@@ -20,6 +20,12 @@ const scenes = new TreeNode({
 }).append({
   text: 'Fighting wolves.',
   track: tracks[8]
+}).append({
+  text: 'Uncovering an ancient tomb.',
+  track: tracks[5]
+}).append({
+  text: 'Defending against orcs.',
+  track: tracks[6]
 });
 
 ReactDOM.render(

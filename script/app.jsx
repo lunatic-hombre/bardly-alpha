@@ -62,6 +62,7 @@ class BardlyTerminal extends React.Component {
       else if (!sameTrack) {
         this.state.audio = new Audio(trackUrl);
         this.state.audio.play();
+        this.state.audio.loop = true;
       }
     }
   }
