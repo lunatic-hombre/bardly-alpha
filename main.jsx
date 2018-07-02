@@ -14,21 +14,21 @@ const tracks = [
   { title: 'Fighting Beasts', url: 'media/fighting-beasts.mp3' },
   { title: 'Shopping in a City Market', url: 'media/shopping-in-a-city-market.mp3' }
 ];
-const scenes = new TreeNode({
+const scenes = [{
   text: 'Wandering through a forest.',
   track: tracks[3]
-}).append({
+},{
   text: 'Fighting wolves.',
   track: tracks[8]
-}).append({
+},{
   text: 'Uncovering an ancient tomb.',
   track: tracks[5]
-}).append({
+},{
   text: 'Defending against orcs.',
   track: tracks[6]
-});
+}];
 
 ReactDOM.render(
-  <BardlyTerminal scenario={scenario} scenes={scenes} tracks={tracks} />,
+  <BardlyTerminal scenario={scenario} scenes={scenes} activeScene={scenes[0]} tracks={tracks} />,
   document.getElementById('root')
 );

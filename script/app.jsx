@@ -6,10 +6,10 @@ class BardlyTerminal extends React.Component {
       playing: false,
       scenario: null,
       selectedScene: null,
-      scenes: new TreeNode(),
+      scenes: [],
+      acticeScene: null,
       tracks: []
     }, props);
-    this.state.activeScene = this.state.scenes;
   }
   onTerminalUpdate(e) {
     this.setState({ terminalText: e.target.value });
@@ -17,7 +17,7 @@ class BardlyTerminal extends React.Component {
   sendCommand(e) {
     const command = this.state.terminalText;
     this.setState({
-      scenes: this.state.scenes.append({text: command}),
+      scenes: this.state.scenes.concat([{text: command}]),
       terminalText: ''
     });
     e.preventDefault();
@@ -26,22 +26,31 @@ class BardlyTerminal extends React.Component {
     this.setState(prev => prev.selectedScene === scene ? { selectedScene: null } : {selectedScene: scene});
   }
   deleteScene(scene) {
+    const index = this.state.scenes.remove(scene);
     if (this.state.activeScene === scene) {
-      this.state.activeScene = scene.parent();
+      this.skipNext();
+    } else {
+      this.forceUpdate();
     }
-    scene.remove();
-    this.forceUpdate();
   }
   togglePlay(scene) {
     const playing = this.state.playing;
     scene = scene || this.state.activeScene;
     this.setState({ activeScene: scene, playing: !playing });
   }
+  next() {
+    const scenes = this.state.scenes, index = scenes.indexOf(this.state.activeScene)+1;
+    return index < scenes.length ? scenes[index] : null;
+  }
+  previous() {
+    const scenes = this.state.scenes, index = scenes.indexOf(this.state.activeScene)-1;
+    return index < scenes.length ? scenes[index] : null;
+  }
   skipNext() {
-    this.setState({ activeScene: this.state.activeScene.firstChild() });
+    this.setState({ activeScene: this.next() });
   }
   skipPrevious() {
-    this.setState({ activeScene: this.state.activeScene.parent() });
+    this.setState({ activeScene: this.previous() });
   }
   updateAudio() {
     const scene = this.state.activeScene,
@@ -78,9 +87,9 @@ class BardlyTerminal extends React.Component {
             {this.state.scenario.title}
           </div>
           <nav className="menu playback">
-            <button className="material-icons" disabled={!this.state.activeScene.parent()} onClick={e => this.skipPrevious()}>skip_previous</button>
+            <button className="material-icons" disabled={!this.previous()} onClick={this.skipPrevious.bind(this)}>skip_previous</button>
             <button className="material-icons" onClick={e => this.togglePlay()}>{this.state.playing ? 'pause' : 'play_arrow'}</button>
-            <button className="material-icons" disabled={!this.state.activeScene.firstChild()} onClick={e => this.skipNext()}>skip_next</button>
+            <button className="material-icons" disabled={!this.next()} onClick={this.skipNext.bind(this)}>skip_next</button>
           </nav>
         </div>
         <main className="terminal-window">
