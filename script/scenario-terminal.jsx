@@ -82,9 +82,7 @@ class ScenarioTerminal extends React.Component {
     this.updateAudio();
   }
   togglePlay(scene) {
-    const playing = this.state.playing;
-    scene = scene || this.state.activeScene;
-    this.setState({ activeScene: scene, playing: !playing });
+    this.setState(prev => scene !== undefined ? { activeScene: scene, playing: prev.activeScene != scene } : { playing: !prev.playing} );
   }
   next() {
     const scenes = this.state.scenes, index = scenes.indexOf(this.state.activeScene)+1;
@@ -102,11 +100,11 @@ class ScenarioTerminal extends React.Component {
   }
   updateAudio() {
     const scene = this.state.activeScene,
-          trackUrl = scene && scene.track && scene.track.url, 
-          audio = this.state.audio, 
+          trackUrl = scene && scene.track && scene.track.url,
+          audio = this.state.audio,
           playing = this.state.playing,
           sameTrack = audio && audio.currentSrc.endsWith(trackUrl);
-    if (audio && !(playing && sameTrack)) {
+    if (audio && (!playing || !sameTrack)) {
         audio.pause();
     }
     if (playing) {
@@ -161,7 +159,7 @@ class ScenarioTerminal extends React.Component {
           <div className="menu-group">
             <nav className="menu">
               <button className="material-icons" onClick={e => this.togglePlay(scene)}>
-                {this.state.activeScene === scene ? (this.state.playing ? 'pause' : 'play_arrow') : 'play_arrow'}
+                {this.state.activeScene == scene ? (this.state.playing ? 'pause' : 'play_arrow') : 'play_arrow'}
               </button>
             </nav>
             <nav className="menu">

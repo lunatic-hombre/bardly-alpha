@@ -4,8 +4,8 @@ const Router = ReactRouterDOM.BrowserRouter, Route = ReactRouterDOM.Route, Link 
 const Bardly = () => (
   <Router>
     <Switch>
-      <Route path="/" exact component={ScenarioTerminal} />
-      <Route path="/scene/:sceneId/track" component={TrackPicker} />
+      <Route path={location.pathname} exact component={ScenarioTerminal} />
+      <Route path={location.pathname + 'scene/:sceneId/track'} component={TrackPicker} />
     </Switch>
   </Router>
 );
