@@ -1,13 +1,57 @@
-class BardlyTerminal extends React.Component {
+
+// Shit for testing
+var sceneId = 1;
+const testData = {
+  scenario: {
+    title: 'Adventure #4'
+  },
+  tracks: [
+    { id:1, title: 'Camping in a Dungeon', url: 'media/camping-in-a-dungeon.mp3' },
+    { id:2, title: 'Exploring a Cave', url: 'media/exploring-a-cave.mp3' },
+    { id:3, title: 'Fighting Goblins', url: 'media/fighting-goblins.mp3' },
+    { id:4, title: 'Traveling in Forest', url: 'media/traveling-in-forest.mp3' },
+    { id:5, title: 'Camping in Forest', url: 'media/camping-in-forest.mp3' },
+    { id:6, title: 'Exploring a Crypt', url: 'media/exploring-a-crypt.mp3' },
+    { id:7, title: 'Fighting Orcs', url: 'media/fighting-orcs.mp3' },
+    { id:8, title: 'Chased in a Dungeon', url: 'media/chased-in-a-dungeon.mp3' },
+    { id:9, title: 'Fighting Beasts', url: 'media/fighting-beasts.mp3' },
+    { id:10, title: 'Shopping in a City Market', url: 'media/shopping-in-a-city-market.mp3' }
+  ]
+};
+testData.scenes = [{
+  id: sceneId++,
+  text: 'Wandering through a forest.',
+  track: testData.tracks[3]
+},{
+  id: sceneId++,
+  text: 'Fighting wolves.',
+  track: testData.tracks[8]
+},{
+  id: sceneId++,
+  text: 'Uncovering an ancient tomb.',
+  track: testData.tracks[5]
+},{
+  id: sceneId++,
+  text: 'Defending against orcs.',
+  track: testData.tracks[6]
+}];
+
+const api = {
+  tracks: new MockApiEndpoint('/api/tracks', testData.tracks),
+  scenes: new MockApiEndpoint('/api/scenes', testData.scenes)
+};
+
+// Class starts here
+class ScenarioTerminal extends React.Component {
   constructor(props) {
     super(props);
     this.state = Object.assign({
       terminalText: '',
       playing: false,
-      scenario: null,
+      scenario: testData.scenario,
       selectedScene: null,
-      scenes: [],
-      acticeScene: null,
+      scenes: testData.scenes,
+      activeScene: testData.scenes[0],
       tracks: []
     }, props);
   }
@@ -16,8 +60,8 @@ class BardlyTerminal extends React.Component {
   }
   sendCommand(e) {
     const command = this.state.terminalText;
+    this.state.scenes.push({id: sceneId++, text: command});
     this.setState({
-      scenes: this.state.scenes.concat([{text: command}]),
       terminalText: ''
     });
     e.preventDefault();
@@ -32,6 +76,10 @@ class BardlyTerminal extends React.Component {
     } else {
       this.forceUpdate();
     }
+  }
+  pause() {
+    this.state.playing = false;
+    this.updateAudio();
   }
   togglePlay(scene) {
     const playing = this.state.playing;
@@ -58,12 +106,8 @@ class BardlyTerminal extends React.Component {
           audio = this.state.audio, 
           playing = this.state.playing,
           sameTrack = audio && audio.currentSrc.endsWith(trackUrl);
-    if (audio) {
-      if (!playing)
+    if (audio && !(playing && sameTrack)) {
         audio.pause();
-      else if (!trackUrl || !sameTrack) {
-        audio.pause();
-      }
     }
     if (playing) {
       if (!trackUrl)
@@ -78,10 +122,10 @@ class BardlyTerminal extends React.Component {
   render() {
     this.updateAudio();
     return (
-      <div className="app">
-        <div className="app-header menu-group">
+      <div className="app-window">
+        <header className="menu-group">
           <nav className="menu app-menu">
-            <button className="material-icons">settings</button>
+            <button disabled className="material-icons">settings</button>
           </nav>
           <div className="scenario">
             {this.state.scenario.title}
@@ -91,9 +135,9 @@ class BardlyTerminal extends React.Component {
             <button className="material-icons" onClick={e => this.togglePlay()}>{this.state.playing ? 'pause' : 'play_arrow'}</button>
             <button className="material-icons" disabled={!this.next()} onClick={this.skipNext.bind(this)}>skip_next</button>
           </nav>
-        </div>
-        <main className="terminal-window">
-          <ul className="scenes">
+        </header>
+        <main>
+          <ul>
             {this.getScenesHtml()}
           </ul>
           <form onSubmit={this.sendCommand.bind(this)}>
@@ -110,9 +154,9 @@ class BardlyTerminal extends React.Component {
   }
 
   getScenesHtml() {
-    return this.state.scenes.map((scene, i) => (
-      <li key={i} className={(scene == this.state.activeScene && 'active' || '') + ' ' + (scene == this.state.selectedScene && 'selected' || '')}>
-        <div className="text" onClick={e => this.onSceneClick(scene)}>{scene.text}</div>
+    return this.state.scenes.map(scene => (
+      <li key={scene.id} className={(scene == this.state.activeScene && 'active' || '') + ' ' + (scene == this.state.selectedScene && 'selected' || '')}>
+        <a href="javascript:void(0)" onClick={e => this.onSceneClick(scene)}>{scene.text}</a>
         <div className="details">
           <div className="menu-group">
             <nav className="menu">
@@ -125,7 +169,9 @@ class BardlyTerminal extends React.Component {
             </nav>
           </div>
           <div className="tags">
-            <span className="tag"><i className="material-icons">music_note</i> {scene.track ? scene.track.title : '(silence)'}</span>
+            <Link to={'/scene/'+scene.id+'/track'} onClick={e => this.pause()}>
+              <i className="material-icons">music_note</i>{scene.track ? scene.track.title : '(silence)'}
+            </Link>
           </div>
         </div>
       </li>

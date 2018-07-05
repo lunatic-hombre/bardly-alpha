@@ -1,34 +1,16 @@
 
-const scenario = {
-  title: 'Adventure #4'
-};
-const tracks = [
-  { title: 'Camping in a Dungeon', url: 'media/camping-in-a-dungeon.mp3' },
-  { title: 'Exploring a Cave', url: 'media/exploring-a-cave.mp3' },
-  { title: 'Fighting Goblins', url: 'media/fighting-goblins.mp3' },
-  { title: 'Traveling in Forest', url: 'media/traveling-in-forest.mp3' },
-  { title: 'Camping in Forest', url: 'media/camping-in-forest.mp3' },
-  { title: 'Exploring a Crypt', url: 'media/exploring-a-crypt.mp3' },
-  { title: 'Fighting Orcs', url: 'media/fighting-orcs.mp3' },
-  { title: 'Chased in a Dungeon', url: 'media/chased-in-a-dungeon.mp3' },
-  { title: 'Fighting Beasts', url: 'media/fighting-beasts.mp3' },
-  { title: 'Shopping in a City Market', url: 'media/shopping-in-a-city-market.mp3' }
-];
-const scenes = [{
-  text: 'Wandering through a forest.',
-  track: tracks[3]
-},{
-  text: 'Fighting wolves.',
-  track: tracks[8]
-},{
-  text: 'Uncovering an ancient tomb.',
-  track: tracks[5]
-},{
-  text: 'Defending against orcs.',
-  track: tracks[6]
-}];
+const Router = ReactRouterDOM.BrowserRouter, Route = ReactRouterDOM.Route, Link = ReactRouterDOM.Link, Switch = ReactRouterDOM.Switch;
+
+const Bardly = () => (
+  <Router>
+    <Switch>
+      <Route path="/" exact component={ScenarioTerminal} />
+      <Route path="/scene/:sceneId/track" component={TrackPicker} />
+    </Switch>
+  </Router>
+);
 
 ReactDOM.render(
-  <BardlyTerminal scenario={scenario} scenes={scenes} activeScene={scenes[0]} tracks={tracks} />,
+  <Bardly />,
   document.getElementById('root')
 );
