@@ -167,7 +167,7 @@ class ScenarioTerminal extends React.Component {
             </nav>
           </div>
           <div className="tags">
-            <Link to={'/scene/'+scene.id+'/track'} onClick={e => this.pause()}>
+            <Link to={location.pathname+'scene/'+scene.id+'/track'} onClick={e => this.pause()}>
               <i className="material-icons">music_note</i>{scene.track ? scene.track.title : '(silence)'}
             </Link>
           </div>
