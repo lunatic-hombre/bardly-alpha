@@ -43,8 +43,8 @@ class TrackPicker extends React.Component {
           </ul>
         </main>
         <footer>
-          <Link to="/">Cancel</Link>
-          <Link to="/" onClick={e => this.save()}>Confirm</Link>
+          <Link to={location.pathname}>Cancel</Link>
+          <Link to={location.pathname} onClick={e => this.save()}>Confirm</Link>
         </footer>
       </div>
     );
